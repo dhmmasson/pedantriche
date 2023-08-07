@@ -2,14 +2,9 @@
   "name": "pedantriche",
   "version": "0.0.1",
   "description": "Helper to find words of certain length, part-of-speech and initial letter (vowel or consonant) in french to cheat at pedantix",
-  "main": "bin/www",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dhmmasson/pedantriche.git"
-  },
+  "author": "dhmmasson",
+  "license": "MIT",
+  "main": "./bin/www",
   "keywords": [
     "pedantix",
     "french",
@@ -20,8 +15,23 @@
     "cheat",
     "words"
   ],
-  "author": "dhmmasson",
-  "license": "MIT",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "node-sass-middleware": "0.11.0",
+    "pug": "2.0.0-beta11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhmmasson/pedantriche.git"
+  },
   "bugs": {
     "url": "https://github.com/dhmmasson/pedantriche/issues"
   },
