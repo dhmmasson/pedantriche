@@ -17,16 +17,20 @@
   ],
   "scripts": {
     "start": "node ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cp node_modules/materialize-css/dist/js/materialize.min.js public/javascripts ; cp -r node_modules/materialize-css/sass/* public/stylesheets",
+    "debug": "sass --watch public/stylesheets/style.scss:public/stylesheets/style.css & nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "^4.18.2",
     "http-errors": "~1.6.3",
+    "materialize-css": "^1.0.0-rc.2",
     "morgan": "~1.9.1",
-    "node-sass-middleware": "0.11.0",
-    "pug": "2.0.0-beta11"
+    "node-sass": "^9.0.0",
+    "node-sass-middleware": "1.0.1",
+    "pug": "3.0.2"
   },
   "repository": {
     "type": "git",

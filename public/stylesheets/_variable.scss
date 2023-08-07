@@ -1,0 +1,15 @@
+@import "./components/color-variables";
+@import "./components/color-classes";
+$primary-color: color("cyan", "lighten-2") !default;
+$primary-color-light: false !default;
+$primary-color-dark: false !default;
+@if not $primary-color-light {
+$primary-color-light: lighten($primary-color, 15%);
+}
+@if not $primary-color-dark {
+$primary-color-dark: darken($primary-color, 15%);
+}
+$secondary-color: color("amber", "lighten-1") !default;
+$success-color: color("light-green", "accent-3") !default;
+$error-color: color("red", "darken-4") !default;
+$link-color: color("cyan", "darken-1") !default;

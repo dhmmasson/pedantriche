@@ -1,3 +1,7 @@
+public/stylesheets/components
+materialize.scss
+materialize.min.js
+
 # Logs
 logs
 *.log
