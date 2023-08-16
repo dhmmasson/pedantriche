@@ -1,6 +1,8 @@
 public/stylesheets/components
 materialize.scss
 materialize.min.js
+Lexique383/
+*.grams
 
 # Logs
 logs
