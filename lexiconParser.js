@@ -20,6 +20,37 @@ function loadLexicon(fileName) {
 }
 
 /**
+ * A word object.
+ * @typedef {Object} Word
+ * @property {string} word - The word string.
+ * @property {string} lemma - The lemma string.
+ * @property {number} length - The length of the word string.
+ * @property {Object} gender - The gender object.
+ * @property {boolean} gender.masculine - Whether the word is masculine.
+ * @property {boolean} gender.feminine - Whether the word is feminine.
+ * @property {Object} number - The number object.
+ * @property {boolean} number.singular - Whether the word is singular.
+ * @property {boolean} number.plural - Whether the word is plural.
+ * @property {Object} pos - The part of speech object.
+ * @property {boolean} pos.noun - Whether the word is a noun.
+ * @property {boolean} pos.verb - Whether the word is a verb.
+ * @property {boolean} pos.adjective - Whether the word is an adjective.
+ * @property {boolean} pos.adverb - Whether the word is an adverb.
+ * @property {Object} frequency - The frequency object.
+ * @property {number} frequency.noun - The frequency of the word as a noun.
+ * @property {number} frequency.verb - The frequency of the word as a verb.
+ * @property {number} frequency.adjective - The frequency of the word as an adjective.
+ * @property {number} frequency.adverb - The frequency of the word as an adverb.
+ * @property {boolean} hyphenated - Whether the word is hyphenated.
+ * @property {number[]} hyphenationPattern - The hyphenation pattern of the word.
+ * @property {boolean} startWithVowel - Whether the word starts with a vowel.
+ */
+
+/** A Lexicon
+ *
+ * * @typedef {Array<Word>} Lexicon
+ */
+/**
  * transform the raw lexicon into an usable object
  * the lexicon as the following header: ortho	phon	lemme	cgram	genre	nombre	freqlemfilms2	freqlemlivres	freqfilms2	freqlivres	infover	nbhomogr	nbhomoph	islem	nblettres	nbphons	cvcv	p_cvcv	voisorth	voisphon	puorth	puphon	syll	nbsyll	cv-cv	orthrenv	phonrenv	orthosyll	cgramortho	deflem	defobs	old20	pld20	morphoder	nbmorph
  *
