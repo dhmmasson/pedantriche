@@ -238,6 +238,66 @@ function filterLexicon(
   return lexicon;
 }
 
+/**
+ * easy to use function to filter the lexicon, directly say feminine, singular, 6 letters, start with vowel as unordered string
+ * @param {Word[]} lexicon - The lexicon array to filter.
+ * @params {String...} args - The arguments to filter the lexicon.
+ * @returns {Word[]} The filtered lexicon array.
+ *
+ * @example
+ * filterLexiconEasy("feminine", "singular", "6", "startWithVowel")
+ * filterLexiconEasy("feminine", "singular", "6", "startWithVowel", "hyphenated")
+ * filterLexiconEasy("feminine", "singular", "6", "startWithVowel", "hyphenated", "3-3")
+ * filterLexiconEasy("feminine", "singular", "6", "startWithVowel", "hyphenated", "3-3", "noun")
+ */
+function filterLexiconEasy(lexicon, ...args) {
+  let nbLetter = -1;
+  let singularity = "both";
+  let gender = "both";
+  let partOfSpeech = "unspecified";
+  let startWithVowel = undefined;
+  let hyphenated = undefined;
+  let hyphenationPattern = [];
+
+  for (let arg of args) {
+    if (typeof arg === "number" || arg.match(/^\d+$/)) nbLetter = parseInt(arg);
+    else if (arg.match(/^(m|f|masculine|feminine)$/i))
+      gender = arg.match(/^(m|masculine)$/i) ? "masculine" : "feminine";
+    else if (arg.match(/^(s|p|singular|plural)$/i))
+      singularity = arg.match(/^(s|singular)$/i) ? "singular" : "plural";
+    else if (arg.match(/^(n|noun|v|verb|adj|adjective|adv|adverb)$/i))
+      partOfSpeech = arg.match(/^(n|noun)$/i)
+        ? "noun"
+        : arg.match(/^(v|verb)$/i)
+        ? "verb"
+        : arg.match(/^(adj|adjective)$/i)
+        ? "adjective"
+        : "adverb";
+    else if (arg.match(/(vowel)/i)) startWithVowel = true;
+    else if (arg.match(/(consonant)/i)) startWithVowel = false;
+    else if (arg.match(/^(hyphenated|multi.*)$/i)) hyphenated = true;
+    else if (arg.match(/^(mono.*)$/i)) hyphenated = false;
+    else if (arg.match(/^\d+(-\d+)*$/)) {
+      hyphenationPattern = arg.split("-").map((n) => parseInt(n));
+      nbLetter =
+        hyphenationPattern.reduce((a, b) => a + b, 0) +
+        hyphenationPattern.length -
+        1;
+      hyphenated = true;
+    }
+  }
+  return filterLexicon(
+    lexicon,
+    nbLetter,
+    singularity,
+    gender,
+    partOfSpeech,
+    startWithVowel,
+    hyphenated,
+    hyphenationPattern
+  );
+}
+
 module.exports = {
   transformLexicon,
   loadLexicon,
