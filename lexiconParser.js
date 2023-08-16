@@ -19,6 +19,7 @@ function loadLexicon(fileName) {
   return lexiconJSON.data;
 }
 
+const partOfSpeechOptions = ["noun", "verb", "adjective", "adverb"];
 /**
  * A word object.
  * @typedef {Object} Word
@@ -175,6 +176,71 @@ function transformLexicon(lexicon) {
   });
 
   return Object.values(words);
+}
+
+/**
+ * Filters the lexicon array based on the specified query parameters.
+ * @param {Word[]} lexicon - The lexicon array to filter.
+ * @param {number} nbLetter - The number of letters in the word.
+ * @param {string} singularity - The singularity of the word.
+ * @param {string} gender - The gender of the word.
+ * @param {string} partOfSpeech - The part of speech of the word.
+ * @param {boolean} startWithVowel - Whether the word starts with a vowel.
+ * @param {boolean} hyphenated - Whether the word is hyphenated.
+ * @param {number[]} hyphenationPattern - The hyphenation pattern of the word.
+ * @returns {Word[]} The filtered lexicon array.
+ */
+function filterLexicon(
+  lexicon,
+  nbLetter,
+  singularity = "both",
+  gender = "both",
+  partOfSpeech = "unspecified",
+  startWithVowel = undefined,
+  hyphenated = undefined,
+  hyphenationPattern = []
+) {
+  if (hyphenationPattern.length > 0 && !hyphenationPattern.includes(NaN)) {
+    nbLetter =
+      hyphenationPattern.reduce((a, b) => a + b, 0) +
+      hyphenationPattern.length -
+      1;
+  }
+  if (nbLetter > 0) lexicon = lexicon.filter((e) => e.length == nbLetter);
+  if (singularity != "both")
+    lexicon = lexicon.filter((e) => e.number[singularity]);
+  if (gender != "both") lexicon = lexicon.filter((e) => e.gender[gender]);
+  if (partOfSpeech != "unspecified")
+    lexicon = lexicon.filter((e) => e.pos[partOfSpeech]);
+  if (startWithVowel !== undefined)
+    lexicon = lexicon.filter((e) => e.startWithVowel === startWithVowel);
+  if (hyphenated !== undefined)
+    lexicon = lexicon.filter((e) => e.hyphenated === hyphenated);
+  if (hyphenationPattern.length > 0)
+    lexicon = lexicon.filter(
+      (e) =>
+        e.hyphenationPattern.length === hyphenationPattern.length &&
+        e.hyphenationPattern.every((v, i) => v == hyphenationPattern[i])
+    );
+
+  //if pos is specified, sort by frequency
+  if (partOfSpeech != "unspecified")
+    lexicon = lexicon.sort(
+      (a, b) => b.frequency[partOfSpeech] - a.frequency[partOfSpeech]
+    );
+  //if pos is unspecified, sort by frequency
+  //sort by the first pos that is not unspecified
+  else
+    lexicon = lexicon.sort((a, b) => {
+      for (let pos of partOfSpeechOptions) {
+        if (a.frequency[pos] != b.frequency[pos]) {
+          return b.frequency[pos] - a.frequency[pos];
+        }
+      }
+      return 0;
+    });
+
+  return lexicon;
 }
 
 module.exports = {
