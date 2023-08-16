@@ -170,6 +170,7 @@ function transformLexicon(lexicon) {
           hyphenationPattern: word.includes("-")
             ? word.split("-").map((subword) => subword.length)
             : [],
+          startWithVowel: "aeiouh".includes(word[0]),
         };
       }
     }
