@@ -1,0 +1,67 @@
+const readline = require("readline");
+
+const {
+  transformLexicon,
+  loadLexicon,
+  filterLexicon,
+  filterLexiconEasy,
+  prettyPrintWord,
+} = require("./lexiconParser");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+const lexiconFile = "resources/Lexique383/Lexique383.tsv";
+rl.setPrompt("> ");
+rl.line = "load ";
+rl.cursor = 5;
+rl.prompt(true);
+
+let lexicon = [];
+let words = [];
+let offset = 0;
+let limit = 25;
+rl.on("line", (line) => {
+  line = line.trim();
+  let command = line.split(" ")[0];
+  switch (command) {
+    case "exit":
+      rl.close();
+      break;
+    case "load":
+      lexicon = transformLexicon(loadLexicon(lexiconFile));
+      console.log(`Loaded ${lexicon.length} words.`);
+      break;
+    case "limit":
+      limit = parseInt(line.slice(6));
+      console.log(`Limit set to ${limit}.`);
+      break;
+    case "filter":
+      let query = line.slice(7);
+      words = filterLexiconEasy(lexicon, ...query.split(" "));
+      console.log(`Found ${words.length} words.`);
+      console.log(prettyPrintWord(words.slice(offset, (offset += limit))));
+
+      break;
+    case "more":
+      console.log(prettyPrintWord(words.slice(offset, (offset += limit))));
+      break;
+    default:
+      console.log(`Unknown command: ${line}`);
+  }
+  if (offset >= words.length) {
+    offset = 0;
+    rl.line = "filter ";
+    rl.cursor = 7;
+  } else {
+    console.log(`${words.length - offset} words remaining.`);
+    rl.line = "more ";
+    rl.cursor = 5;
+  }
+  rl.prompt(true);
+});
+
+rl.on("close", () => {
+  console.log("Goodbye!");
+  process.exit(0);
+});
