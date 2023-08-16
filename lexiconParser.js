@@ -329,4 +329,7 @@ function prettyPrintWord(words) {
 module.exports = {
   transformLexicon,
   loadLexicon,
+  filterLexicon,
+  prettyPrintWord,
+  filterLexiconEasy,
 };
