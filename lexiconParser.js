@@ -51,8 +51,9 @@ const partOfSpeechOptions = ["noun", "verb", "adjective", "adverb"];
  *
  * * @typedef {Array<Word>} Lexicon
  */
+
 /**
- * transform the raw lexicon into an usable object
+ * transform the raw lexicon into an array of Word
  * the lexicon as the following header: ortho	phon	lemme	cgram	genre	nombre	freqlemfilms2	freqlemlivres	freqfilms2	freqlivres	infover	nbhomogr	nbhomoph	islem	nblettres	nbphons	cvcv	p_cvcv	voisorth	voisphon	puorth	puphon	syll	nbsyll	cv-cv	orthrenv	phonrenv	orthosyll	cgramortho	deflem	defobs	old20	pld20	morphoder	nbmorph
  *
  * ortho is the word
@@ -84,8 +85,9 @@ const partOfSpeechOptions = ["noun", "verb", "adjective", "adverb"];
  *  - verb : freqlivres iff verb is noun or 0
  *  - adjective : freqlivres iff adjective is noun or 0
  *  - adverb : freqlivres iff adverb is noun or 0
- * - hyphanated : if the word contains "-"
- * - hyphanationPattern : array of the lengths of each subword (ex. arc-en-ciel -> [3,2,4])
+ * - hyphenated : if the word contains "-"
+ * - hyphenationPattern : array of the lengths of each subword (ex. arc-en-ciel -> [3,2,4])
+ * - startWithVowel : if first letter is "aeiouh"
  *
  *
  * for processing keep a map of the words already added, if a word already exist merge them
