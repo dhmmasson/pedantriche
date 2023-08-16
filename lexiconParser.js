@@ -298,6 +298,34 @@ function filterLexiconEasy(lexicon, ...args) {
   );
 }
 
+/**
+ * pretty print word
+ * @param {Word[]|Word} words - The word to print.
+ * @returns {string} The pretty printed word.
+ * e.g. "bonjour (bonjour) n.m.s. 7 letters, freq : 0.000000 "
+ * "dormir (dormir) v. 6 letters, freq : 0.000000 "
+ * "archi-connues (archi-connu) adj.f.p 11 letters, freq : 0.000000 "
+ */
+function prettyPrintWord(words) {
+  if (Array.isArray(words)) {
+    return words.map((word) => prettyPrintWord(word)).join("\n");
+  }
+  let word = words;
+  let str = word.word;
+  if (word.lemma != word.word) str += ` (${word.lemma})`;
+  str += ` ${word.pos.noun ? "n." : ""}${word.pos.verb ? "v." : ""}${
+    word.pos.adjective ? "adj." : ""
+  }${word.pos.adverb ? "adv." : ""}`;
+  if (word.gender.masculine) str += ".m";
+  if (word.gender.feminine) str += ".f";
+  if (word.number.singular) str += ".s";
+  if (word.number.plural) str += ".p";
+  str += ` ${word.length} letters, freq : ${word.frequency.noun}`;
+  if (word.hyphenated)
+    str += `, hyphenated : ${word.hyphenationPattern.join("-")}`;
+  return str;
+}
+
 module.exports = {
   transformLexicon,
   loadLexicon,
