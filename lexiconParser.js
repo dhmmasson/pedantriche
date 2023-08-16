@@ -135,12 +135,6 @@ function transformLexicon(lexicon) {
           existingWord.frequency.adverb,
           cgram === "ADV" ? parseFloat(freqlivres) : 0
         );
-        existingWord.hyphenated = existingWord.hyphenated || word.includes("-");
-        existingWord.hyphenationPattern =
-          existingWord.hyphenationPattern ||
-          (word.includes("-")
-            ? word.split("-").map((subword) => subword.length)
-            : []);
       } else {
         words[word] = {
           word,
